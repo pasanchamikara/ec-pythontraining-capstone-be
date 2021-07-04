@@ -1,1 +1,0 @@
-# ec-pythontraining-capstone-be
