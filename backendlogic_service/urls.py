@@ -15,7 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from items.views import ItemView, ItemParameterView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('items/', ItemView.as_view()),
+    path('items/<int:item_id>', ItemParameterView.as_view()) 
 ]
