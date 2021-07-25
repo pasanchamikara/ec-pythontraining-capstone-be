@@ -20,5 +20,5 @@ from items.views import ItemView, ItemParameterView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('items/', ItemView.as_view()),
-    path('items/<int:item_id>', ItemParameterView.as_view()) 
+    path('items/<int:itemId>', ItemParameterView.as_view()) 
 ]
