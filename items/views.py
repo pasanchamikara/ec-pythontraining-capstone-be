@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 from django.http import HttpResponse
+from django.utils.decorators import method_decorator
 import json
+import requests
 
 from .models import Item
 from .serializers import ItemSerializer
@@ -9,7 +11,27 @@ from .serializers import ItemSerializer
 # def user_authenticated():
 #     return
 
+class AuthRegisterView(APIView):
+    def post(self, request):
+        user_data = {"email": request.data["email"], "name": request.data["name"], "password": request.data["password"]}
+        res = requests.post('http://localhost/auth/signup', user_data)
+        if res.status_code == 200:
+            return
+        else:
+            return
+
+class AuthLoginView(APIView):
+    def post(self, request):
+        user_data = {"email": request.data["email"], "password": request.data["password"]}
+        res = request.post('http://localhost/auth/signin', user_data)
+        if res.status_code == 200:
+            return
+        else:
+            return
+
+
 # Create your views here.
+@method_decorator()
 class ItemView(APIView):
     def get(self, request):
         try:
@@ -27,7 +49,8 @@ class ItemView(APIView):
         except:
             return HttpResponse(json.dumps({"message" : "error while creating the object" }), headers = {'Content-Type': 'application/json'})
     
-    
+
+@method_decorator()    
 class ItemParameterView(APIView):
     def get(self, request):
         try:
